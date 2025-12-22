@@ -12,21 +12,11 @@ const data = ref({
 })
 
 function submitForm() {
-  console.log('Wysyłam:', data.value) // ← DODAJ
-  
-  axiosClient.get('/sanctum/csrf-cookie').then(() => {
-    axiosClient.post('/api/register', data.value)
-      .then(response => {
-        console.log('Rejestracja udana:', response.data)
-      })
-      .catch(error => {
-  console.error('PEŁNY BŁĄD:', error)
-  console.error('RESPONSE:', error.response)
-  console.error('DATA:', error.response?.data)
-  console.error('ERRORS:', error.response?.data?.errors)
-})
-  })
+  axiosClient.get('sanctum/csrf-cookie').then( ()=>{
+    axiosClient.post("/register",data.value)
+  });
 }
+
 </script>
 
 <template>

@@ -1,6 +1,22 @@
 <script setup>
+import { ref } from 'vue';
+import axiosClient from '../axios';
 import GuestLayout from '../components/GuestLayout.vue';
+import router from '../router';
 
+const data = ref({
+  name: '',
+  password: ''
+});
+
+function submitForm() {
+  axiosClient.get('sanctum/csrf-cookie').then( ()=>{
+    axiosClient.post("/login")
+    .then( response => {
+      router.push({ name: 'Home' });
+    })
+  });
+}
 
 </script>
 
@@ -11,26 +27,32 @@ import GuestLayout from '../components/GuestLayout.vue';
     <div class="h-screen w-screen bg-gray-600 flex flex-col items-center justify-center">
       <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Logowanie</h2>
       
-      <form method="post" action="#" class="space-y-4">
-        <!-- Nazwa użytkownika -->
+      <form @submit.prevent="submitForm"  class="space-y-4">
+        <!-- Email -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Nazwa użytkownika</label>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
           <input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Wprowadź nazwę użytkownika"
+            type="email"
+            name="email"
+            id="email"
+            autocomplete="current-email"
+            required=""
+            placeholder="Wprowadź email"
+            v-model="data.email"
             class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
         </div>
         <!-- Hasło -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Hasło</label>
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Hasło</label>
           <input
             type="password"
             name="password"
             id="password" 
+            autocomplete="current-password"
             placeholder="Wprowadź hasło"
+            required=""
+            v-model="data.password"
             class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
         </div>

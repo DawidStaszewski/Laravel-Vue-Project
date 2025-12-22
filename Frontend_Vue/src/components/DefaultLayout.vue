@@ -22,10 +22,8 @@
                 class="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">View notifications</span>
-
               </button>
 
-              <!-- Profile dropdown -->
               <Menu as="div" class="relative ml-3">
                 <MenuButton
                   class="relative flex max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
@@ -42,9 +40,10 @@
                   <MenuItems
                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-1 outline-1 -outline-offset-1 outline-white/10">
                     <MenuItem>
-                    <button @click="logout"
-                      class="block w-full px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">Sign
-                      out</button>
+                      <button @click="logout"
+                        class="block w-full px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white">
+                        Sign out
+                      </button>
                     </MenuItem>
                   </MenuItems>
                 </transition>
@@ -52,7 +51,6 @@
             </div>
           </div>
           <div class="-mr-2 flex md:hidden">
-            <!-- Mobile menu button -->
             <DisclosureButton
               class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
               <span class="absolute -inset-0.5"></span>
@@ -85,20 +83,18 @@
               <DisclosureButton @click="logout" class="">Sign Out</DisclosureButton>
             </div>
           </div>
-
         </div>
       </DisclosurePanel>
     </Disclosure>
     <RouterView />
-
   </div>
 </template>
 
 <script setup>
-const route = useRoute();
-import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router';
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import axiosClient from "../axios.js";
+import router from "../router.js";
 
 const user = {
   name: 'Tom Cook',
@@ -106,16 +102,18 @@ const user = {
   imageUrl:
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
+
 const navigation = [
   { name: 'Upload', to: { name: 'Home' } },
   { name: 'My Images', to: { name: 'MyImages' } },
 ];
 
 function logout() {
-  console.log('Logging out...');
+  axiosClient.post('/logout')
+    .then((response) => {
+      router.push({ name: 'Login' });
+    })
 }
-
 </script>
-
 
 <style scoped></style>

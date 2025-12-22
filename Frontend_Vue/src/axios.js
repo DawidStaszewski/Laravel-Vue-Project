@@ -11,7 +11,7 @@ const axiosClient = axios.create({
 //     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
 // })
 
-axiosClient.interceptors.response.use(response => {
+axiosClient.interceptors.response.use((response) => {
     return response;
 }, error => {
     if (error.response && error.response.status === 401) {
