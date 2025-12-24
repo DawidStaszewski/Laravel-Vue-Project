@@ -2,12 +2,14 @@
 import { ref } from 'vue';
 import axiosClient from '../axios';
 import GuestLayout from '../components/GuestLayout.vue';
-import router from '../router';
+import router from '../router.js';
 
 const data = ref({
   name: '',
   password: ''
 });
+
+const errorMessage = ref('');
 
 function submitForm() {
   axiosClient.get('sanctum/csrf-cookie').then( ()=>{
@@ -15,15 +17,22 @@ function submitForm() {
     .then( response => {
       router.push({ name: 'Home' });
     })
-  });
-}
+    .catch( error => {
+        console.log(error.response)
+        errorMessage.value=error.response.data.message;
+      })
+    });
+  };
+
 
 </script>
 
 <template>
   <GuestLayout>
-    
-    
+    <div v-if="errorMessage" class="py-2 px-3 rounded text-white bg-red-500">
+      {{ errorMessage }}
+    </div>
+
     <div class="h-screen w-screen bg-gray-600 flex flex-col items-center justify-center">
       <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Logowanie</h2>
       

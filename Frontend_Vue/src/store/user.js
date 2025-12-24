@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import axiosClient from '../axios.js';
 
-const userUserStore = defineStore('user', {
+const useUserStore = defineStore('user', {
     state: () => ({
         user: null
     }),
@@ -15,3 +15,5 @@ const userUserStore = defineStore('user', {
         }
     }
 });
+
+export default useUserStore;
