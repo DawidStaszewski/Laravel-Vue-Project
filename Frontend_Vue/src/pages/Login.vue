@@ -13,9 +13,9 @@ const errorMessage = ref('');
 
 function submitForm() {
   axiosClient.get('sanctum/csrf-cookie').then( ()=>{
-    axiosClient.post("/login")
+    axiosClient.post("/login", data.value)
     .then( response => {
-      router.push({ name: 'Home' });
+      router.push({ email: 'Home' });
     })
     .catch( error => {
         console.log(error.response)
