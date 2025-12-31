@@ -70,7 +70,7 @@
         <div class="border-t border-white/10 pt-4 pb-3">
           <div class="flex items-center px-5">
             <div class="shrink-0">
-              <img class="size-10 rounded-full outline -outline-offset-1 outline-white/10" :src="user.imageUrl"
+              <img class="size-10 rounded-full outline -outline-offset-1 outline-white/10" src="https://randomuser.me/api/portraits/men/15.jpg"
                 alt="" />
                 <span class="text-white ml-3">{{ user.name }}</span>
             </div>

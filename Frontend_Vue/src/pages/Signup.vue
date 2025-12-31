@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
 import axiosClient from '../axios'
 import GuestLayout from '../components/GuestLayout.vue'
+import router from "../router.js";
 
 const data = ref({
   name: '',
@@ -11,9 +11,27 @@ const data = ref({
   password_confirmation: ''
 })
 
+const errorMessage = ref(
+  {
+    name: '',
+    email: '',
+    password: ''
+  }
+)
+
 function submitForm() {
   axiosClient.get('sanctum/csrf-cookie').then( ()=>{
     axiosClient.post("/register",data.value)
+    .then( response => {
+      router.push({ name: 'Home' });
+    })
+    .catch(error => {
+  if (error.response && error.response.data && error.response.data.errors) {
+    errorMessage.value = error.response.data.errors
+  } else {
+    console.log(error)
+  }
+})
   });
 }
 
@@ -21,7 +39,7 @@ function submitForm() {
 
 <template>
   <GuestLayout>
-    <pre>{{ data }}</pre>
+    
     <div class="h-screen w-screen bg-gray-600 flex flex-col items-center justify-center">
       <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Rejestracja</h2>
       
@@ -33,10 +51,11 @@ function submitForm() {
             type="text"
             name="name"
             id="name"
-            required
+            
             v-model="data.name"
             class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
+          <p v-if="errorMessage.name" class="text-red-500">{{ errorMessage.name[0] }}</p>
         </div>
 
         <!-- Email -->
@@ -46,10 +65,11 @@ function submitForm() {
             type="email"
             name="email"
             id="email"  
-            required
+            
             v-model="data.email"
             class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
+          <p v-if="errorMessage.email" class="text-red-500">{{ errorMessage.email[0] }}</p>
         </div>
 
         <!-- Hasło -->
@@ -58,10 +78,11 @@ function submitForm() {
           <input
             type="password"
             name="password"
-            required
+            
             v-model="data.password"
             class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
+          <p v-if="errorMessage.password" class="text-red-500">{{ errorMessage.password[0] }}</p>
         </div>
 
         <!-- Potwierdzenie hasła -->
@@ -71,10 +92,11 @@ function submitForm() {
             type="password"
             name="password_confirmation"
             id="password_confirmation"
-            required
+            
             v-model="data.password_confirmation"
             class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
+          
         </div>
 
         <!-- Przycisk -->

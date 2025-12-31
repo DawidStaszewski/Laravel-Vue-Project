@@ -5,7 +5,7 @@ import GuestLayout from '../components/GuestLayout.vue';
 import router from '../router.js';
 
 const data = ref({
-  name: '',
+  email: '',
   password: ''
 });
 
@@ -15,7 +15,7 @@ function submitForm() {
   axiosClient.get('sanctum/csrf-cookie').then( ()=>{
     axiosClient.post("/login", data.value)
     .then( response => {
-      router.push({ email: 'Home' });
+      router.push({ name: 'Home' });
     })
     .catch( error => {
         console.log(error.response)
