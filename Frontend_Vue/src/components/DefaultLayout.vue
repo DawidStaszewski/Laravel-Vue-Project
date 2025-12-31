@@ -29,8 +29,7 @@
                   class="relative flex max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
                   <span class="absolute -inset-1.5"></span>
                   <span class="sr-only">Open user menu</span>
-                  <img class="size-8 rounded-full outline -outline-offset-1 outline-white/10" :src="user.imageUrl"
-                    alt="" />
+                  <img class="size-8 rounded-full outline -outline-offset-1 outline-white/10" src="https://randomuser.me/api/portraits/men/15.jpg" alt=""/>
                 </MenuButton>
 
                 <transition enter-active-class="transition ease-out duration-100"
@@ -73,6 +72,7 @@
             <div class="shrink-0">
               <img class="size-10 rounded-full outline -outline-offset-1 outline-white/10" :src="user.imageUrl"
                 alt="" />
+                <span class="text-white ml-3">{{ user.name }}</span>
             </div>
             <div class="ml-3">
               <div class="text-base/5 font-medium text-white">{{ user.name }}</div>
