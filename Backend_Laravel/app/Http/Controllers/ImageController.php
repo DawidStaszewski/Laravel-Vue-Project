@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Image;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class ImageController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return Image::all()
+            ->map(function ($image) {
+                return [
+                    'id' => $image->id,
+                    'url' => url(Storage::url($image->url)),
+                    'label' => $image->label,
+                ];
+            });
+    }
+
+   
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'image' => ['required', 'file', 'image', 'mimes:jpeg,png,jpg'], 
+            'label' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $path = $request->file('image')->store('images', 'public');
+
+        $image = Image::create([
+            'path' => $path,
+            'label' => $request->input('label'),
+            'user_id' => $request->user()->id,
+        ]);
+
+        return response()->json($image, 201);
+    }
+
+   
+    public function update(User $user, Image $image)
+    {
+        return $user->id === $image->user_id;
+    }
+    
+    public function delete(User $user, Image $image)
+    {
+        return $user->id === $image->user_id;
+    }
+
+    public function destroy(Image $image)
+    {
+        $this->authorize('delete', $image);
+
+        Storage::disk('public')->delete($image->path);
+        $image->delete();
+
+        return response(null, 204);
+    }
+}

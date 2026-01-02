@@ -1,10 +1,21 @@
 <script setup>
+import { ref } from 'vue';
+
   const images = [
-    { id: 1, label: 'Label 1', url: 'https://via.placeholder.com/300' },
-    { id: 1, label: 'Label 1', url: 'https://via.placeholder.com/300' },
-    { id: 1, label: 'Label 1', url: 'https://via.placeholder.com/300' },
+    ref([])
   ];
+
+  onMounted(() => {
+    axiosClient.get('api/image')
+      .then((response) => {
+        console.log(response.date);
+        images.value=response.data;
+      })
+  });
+
 </script>
+
+
 
 <template>
     <header

@@ -55,7 +55,7 @@ function submitForm() {
             v-model="data.name"
             class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-          <p v-if="errorMessage.name" class="text-red-500">{{ errorMessage.name[0] }}</p>
+          <p v-if="errorMessage.name" class="text-red-500">{{ error.name ? errorMessage.name[0] : ''}}</p>
         </div>
 
         <!-- Email -->
@@ -69,7 +69,7 @@ function submitForm() {
             v-model="data.email"
             class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-          <p v-if="errorMessage.email" class="text-red-500">{{ errorMessage.email[0] }}</p>
+          <p v-if="errorMessage.email" class="text-red-500">{{ error.email ? errorMessage.email[0] : '' }}</p>
         </div>
 
         <!-- Hasło -->
@@ -82,7 +82,7 @@ function submitForm() {
             v-model="data.password"
             class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-          <p v-if="errorMessage.password" class="text-red-500">{{ errorMessage.password[0] }}</p>
+          <p v-if="errorMessage.password" class="text-red-500">{{ error.password ? errorMessage.password[0] : '' }}</p>
         </div>
 
         <!-- Potwierdzenie hasła -->
