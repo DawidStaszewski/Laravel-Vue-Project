@@ -1,5 +1,24 @@
 <script setup>
 import { PhotoIcon } from "@heroicons/vue/24/solid";
+import {ref} from "vue";
+import axiosClient from "../axios.js";
+import router from "../router.js";
+
+const data = ref({
+  image: null,
+  label: '',
+});
+
+function submitForm() {
+  const formData = new FormData();
+  formData.append('image', data.value.image)
+  formData.append('label',data.value.label)
+  axiosClient.post('/api/images',formData)
+    .then(() => {
+      router.push({ name: 'MyImages' });
+    })
+}
+
 </script>
 
 <template>
@@ -12,57 +31,28 @@ import { PhotoIcon } from "@heroicons/vue/24/solid";
   </header>
   <main>
     <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-      <div class="mb-4">
-      <div class="mb-4">
-          <label for="text" class="block text-sm/6 font-medium text-white"
-            >Label</label
-          >
-          <div class="mt-2">
-            <input
-              type="text"
-              name="text"
-              id="text"
-              class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-            />
-          </div>
+      <form @submit.prevent="submitForm">
+        <div class="mb-4">
+          <label for="label" class="block text-sm font-medium text-gray-700">Label</label>
+          <input
+            id="file-upload"
+            name="file-upload"
+            type="file"
+            @change="data.image = $event.target.files[0]"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+          <input
+            type="text"
+            v-model="data.label"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
         </div>
-        <label for="cover-photo" class="block text-sm/6 font-medium text-white"
-          >Image</label
+        <button
+          type="submit"
+          class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-        <div
-          class="mt-2 flex justify-center rounded-lg border border-dashed border-white/25 px-6 py-10"
-        >
-          <div class="text-center">
-            <PhotoIcon
-              class="mx-auto size-12 text-gray-600"
-              aria-hidden="true"
-            />
-            <div class="mt-4 flex text-sm/6 text-gray-400">
-              <label
-                for="file-upload"
-                class="relative cursor-pointer rounded-md bg-transparent font-semibold text-indigo-400 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-500 hover:text-indigo-300"
-              >
-                <span>Upload a file</span>
-                <input
-                  id="file-upload"
-                  name="file-upload"
-                  type="file"
-                  class="sr-only"
-                />
-              </label>
-              <p class="pl-1">or drag and drop</p>
-            </div>
-            <p class="text-xs/5 text-gray-400">PNG, JPG, GIF up to 10MB</p>
-          </div>
-        </div>
-      </div>
-
-      <button
-        type="submit"
-        class="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-      >
-        Savea
-      </button>
+          Submit
+        </button>
+      </form>
     </div>
   </main>
 </template>

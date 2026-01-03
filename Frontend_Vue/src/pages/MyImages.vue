@@ -31,7 +31,7 @@ import axiosClient from "../axios.js";
         <div v-for="image in images" :key="image.id" class="bg-white overflow-hidden shadow rounded-lg">
           <img :src="image.url" alt="Image" class="w-full h-48 object-contain">
           <div class="px-4 py-4">
-            <h3 class="text-lg font-semibold text-gray-900">{{ image.name }}</h3>
+            <h3 class="text-lg font-semibold text-gray-900">{{ image.id }}</h3>
             <p class="text-sm text-gray-500 mb-4">{{ image.label }}</p>
             <div class="flex justify-between ">
               <button type="submit"

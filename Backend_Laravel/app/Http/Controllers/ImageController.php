@@ -13,11 +13,12 @@ class ImageController extends Controller
      */
     public function index()
     {
-        return Image::all()
+        return Image::latest()
+            ->get()
             ->map(function ($image) {
                 return [
                     'id' => $image->id,
-                    'url' => url(Storage::url($image->url)),
+                    'url' => url(Storage::url($image->path)),
                     'label' => $image->label,
                 ];
             });
