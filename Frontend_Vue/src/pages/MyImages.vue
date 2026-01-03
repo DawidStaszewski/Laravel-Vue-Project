@@ -1,14 +1,14 @@
 <script setup>
-import { ref } from 'vue';
+import {onMounted, ref} from "vue";
+import axiosClient from "../axios.js";
 
-  const images = [
-    ref([])
-  ];
+
+  const images = ref([]);
 
   onMounted(() => {
-    axiosClient.get('api/image')
+    axiosClient.get('api/images')
       .then((response) => {
-        console.log(response.date);
+        console.log(response.data);
         images.value=response.data;
       })
   });
