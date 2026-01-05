@@ -5,6 +5,20 @@ import axiosClient from "../axios.js";
 
   const images = ref([]);
 
+  async function copyImageUrl(url){
+    await navigator.clipboard.writeText(url);
+  }
+
+  function deleteImage(id) {
+    if (!confirm("Are you sure you want to delete this image?")) {
+      return;
+    }
+    axiosClient.delete(`/api/images/${id}`)
+      .then(() => {
+        images.value = images.value.filter(image => image.id !== id);
+      });
+  }
+
   onMounted(() => {
     axiosClient.get('api/images')
       .then((response) => {

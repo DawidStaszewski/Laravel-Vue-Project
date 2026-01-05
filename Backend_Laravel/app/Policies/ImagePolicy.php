@@ -29,7 +29,7 @@ class ImagePolicy
      */
     public function create(User $user): bool
     {
-        return auth9()->check();
+        return auth()->check();
     }
 
     /**
@@ -45,7 +45,7 @@ class ImagePolicy
      */
     public function delete(User $user, Image $image): bool
     {
-        return false;
+        return $user->id === $image->user_id;
     }
 
     /**

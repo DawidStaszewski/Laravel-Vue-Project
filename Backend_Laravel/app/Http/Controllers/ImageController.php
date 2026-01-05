@@ -46,17 +46,6 @@ class ImageController extends Controller
         return response()->json($image, 201);
     }
 
-   
-    public function update(User $user, Image $image)
-    {
-        return $user->id === $image->user_id;
-    }
-    
-    public function delete(User $user, Image $image)
-    {
-        return $user->id === $image->user_id;
-    }
-
     public function destroy(Image $image)
     {
         $this->authorize('delete', $image);
