@@ -14,7 +14,7 @@ const routes = [
         children: [
             {path: '/', name: 'Home', component: Home},
             {path: '/images', name: 'MyImages', component: MyImages},
-            {path: '/images:id/edit' , name: 'EditImage', compontent: Home},
+            {path: '/images/:id/edit' , name: 'EditImage', component: Home},
         ],
         beforeEnter: async (to, from, next) => {
             try {

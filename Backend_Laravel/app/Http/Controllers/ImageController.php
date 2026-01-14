@@ -45,12 +45,15 @@ class ImageController extends Controller
         return response()->json($image, 201);
     }
 
-    public function update(Image $image)
+    public function update(Request $request, Image $image)
     {
-        $this->authorize('update',$update);
+        $this->authorize('update',$image);
 
-        Storage::disk('public')->update($image->path);
-        $image->update();
+        $request->validate(['label' => ['nulable','string', 'max:255']]);
+        
+        $image->update([
+            'label' => $request->label,
+        ]);
 
         return response(null, 204);
     }
