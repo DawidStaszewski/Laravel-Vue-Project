@@ -37,9 +37,9 @@ class ImagePolicy
      */
     public function update(User $user, Image $image): bool
     {
-        return false;
+        return $user->id === $image->user_id;
     }
-
+    
     /**
      * Determine whether the user can delete the model.
      */

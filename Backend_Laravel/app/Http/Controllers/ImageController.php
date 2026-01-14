@@ -24,7 +24,6 @@ class ImageController extends Controller
             });
     }
 
-   
     /**
      * Store a newly created resource in storage.
      */
@@ -44,6 +43,16 @@ class ImageController extends Controller
         ]);
 
         return response()->json($image, 201);
+    }
+
+    public function update(Image $image)
+    {
+        $this->authorize('update',$update);
+
+        Storage::disk('public')->update($image->path);
+        $image->update();
+
+        return response(null, 204);
     }
 
     public function destroy(Image $image)

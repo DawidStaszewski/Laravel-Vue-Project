@@ -4,6 +4,17 @@ import {ref} from "vue";
 import axiosClient from "../axios.js";
 import router from "../router.js";
 
+const isEdit = computed(() => !!route.params.id);
+
+onMounted(() =>{
+  if (isEdit.value){
+    axiosClient.get(`/api/images/${route.parasms.id}`)
+      .then(res =>{
+        data.value.label=res.data.label ?? "";
+      });
+  }
+});
+
 const data = ref({
   image: null,
   label: '',
