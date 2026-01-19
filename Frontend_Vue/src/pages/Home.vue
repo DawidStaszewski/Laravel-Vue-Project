@@ -20,7 +20,7 @@ const isEdit = computed(() => !!imageId.value);
 
 onMounted(() => {
   if (isEdit.value) {
-    axiosClient.get(`/api/images/${route.parasms.id}`).then((res) => {
+    axiosClient.get(`/api/images/${route.params.id}`).then((res) => {
       data.value.label = res.data.label ?? "";
     });
   }

@@ -11,5 +11,5 @@ Route::middleware(['auth:sanctum'])
     });
 
     Route::apiResource('/images', ImageController::class)
-    ->only(['index', 'store', 'update', 'destroy']);
+    ->only(['index', 'store', 'show', 'update', 'destroy']);
 });

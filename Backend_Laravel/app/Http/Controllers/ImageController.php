@@ -49,7 +49,7 @@ class ImageController extends Controller
     {
         $this->authorize('update',$image);
 
-        $request->validate(['label' => ['nulable','string', 'max:255']]);
+        $request->validate(['label' => ['nullable','string', 'max:255']]);
         
         $image->update([
             'label' => $request->label,
@@ -66,5 +66,15 @@ class ImageController extends Controller
         $image->delete();
 
         return response(null, 204);
+    }
+    public function show(Image $image)
+    {
+        $this->authorize('update', $image);
+
+        return [
+            'id' => $image->id,
+            'label' => $image->label,
+            'url' => url(Storage::url($image->path)),
+        ];
     }
 }
