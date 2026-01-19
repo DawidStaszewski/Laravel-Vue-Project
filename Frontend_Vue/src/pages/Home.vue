@@ -19,11 +19,11 @@ const imageId = computed(() => {
 const isEdit = computed(() => !!imageId.value);
 
 onMounted(() => {
-  if (isEdit.value) {
-    axiosClient.get(`/api/images/${route.params.id}`).then((res) => {
-      data.value.label = res.data.label ?? "";
-    });
-  }
+  if (!isEdit.value) return;
+
+  axiosClient.get(`/api/images/${imageId.value}`).then((res) => {
+    data.value.label = res.data.label ?? "";
+  });
 });
 
 function submitForm() {
